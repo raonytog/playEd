@@ -1,0 +1,29 @@
+Estruturas a organizar
+
+tUsuário
+{
+    char *nome;
+    tPlaylist *playlist;
+    int numPlaylist;
+    int numArtistas;
+};
+
+tPlaylist
+{
+    tMúsicas;
+    char *nome;
+};
+
+tMúsicas
+{
+    char *música;
+    char *artista;
+};
+
+tAmizades
+{
+    char *amg1;
+    char *amg2;
+    int artistas_em_comum;
+    tPlaylist *playlistFatoradas;
+};

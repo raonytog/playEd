@@ -18,5 +18,7 @@ int main (int argc, char *argv[]) {
 
     Usuario *raony = CriaUsuario(path);
     ImprimeUsuario(raony);
+    LiberaUsuario(raony);
+
     return 0;
 }

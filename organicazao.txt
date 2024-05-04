@@ -1,23 +1,23 @@
 Estruturas a organizar
 
-tUsuário {
+tUsuário { // raony
     char *nome;
     tPlaylist *playlist;
     int numPlaylist;
     int numArtistas;
 };
 
-tPlaylist {
+tPlaylist { // malu
     tMúsicas;
     char *nome;
 };
 
-tMúsicas {
+tMúsicas { // malu
     char *música;
     char *artista;
 };
 
-tAmizades {
+tAmizades { // deus
     char *amg1;
     char *amg2;
     int artistas_em_comum;

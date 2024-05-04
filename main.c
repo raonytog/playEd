@@ -6,7 +6,6 @@
 
 #define DIR_MAX_SIZE 1000
 
-
 int main (int argc, char *argv[]) {
     if (argc <= 1) {
         printf("Diretorio invalido\n");

@@ -6,7 +6,7 @@ run:
 	./prog
 
 # compila e testa com o argv
-make try:
+try:
 	make compile
 	./prog testes/
 

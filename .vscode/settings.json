@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "usuario.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "listausuarios.h": "c"
     }
 }

@@ -15,9 +15,29 @@ struct ListaUsuarios {
 };
 
 ListaUsuarios *IniciaListaUsuarios() {
-    ListaUsuarios *l = malloc(sizeof(LiberaUsuario));
+    ListaUsuarios *l = malloc(sizeof(ListaUsuarios));
     l->first = l->last = NULL;
     return l;
+}
+
+void LeUsuariosDoArquivo(ListaUsuarios *userList, char *path) {
+    if (!userList || !path) return;
+
+    char pathUsuarios[1000];
+    sprintf(pathUsuarios, "%s/teste.txt", path);
+
+    FILE *fUser = fopen(pathUsuarios, "r");
+    if (!fUser) {
+        printf("Arquivo de usuarios nao foi aberto!");
+        exit(1);
+    }
+
+    while (!feof(fUser)) {
+        Usuario *user = CriaUsuario(fUser);
+        InsereListaUsuario(userList, user);
+    }
+
+    fclose(fUser);
 }
 
 void InsereListaUsuario(ListaUsuarios *userList, Usuario *user) {
@@ -73,10 +93,15 @@ void LiberaListaUsuario(ListaUsuarios *userList) {
     if (!userList) return;
 
     Celula *aux;
-    for (aux = userList->first; aux; aux = aux->prox) {
-        userList->first = aux;
-        free(userList->first);
-    }
+    free(userList->first->user);
+    free(userList);
+    // for (aux = userList->first; aux; aux = aux->prox) {
+    //     userList->first = aux;
+    //     LiberaUsuario(userList->first->user);
+    //     free(userList->first);
+    // }
+
+    // free(userList);
 }
 
 int EhListaUsuarioVazia(ListaUsuarios *userList) {

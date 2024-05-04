@@ -7,6 +7,7 @@ typedef struct ListaUsuarios ListaUsuarios;
 
 ListaUsuarios *IniciaListaUsuarios();
 
+void LeUsuariosDoArquivo(ListaUsuarios *userList, char *path);
 
 void InsereListaUsuario(ListaUsuarios *userList, Usuario *user);
 

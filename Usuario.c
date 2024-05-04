@@ -1,6 +1,5 @@
 #include "Usuario.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -10,40 +9,30 @@ struct Usuario {
     // playlist
 };
 
-Usuario *CriaUsuario(char *path) {
-    if (!path) return NULL;
-
-    char pathUsuarios[1000];
-    sprintf(pathUsuarios, "%s/teste.txt", path);
-
-    FILE *fUser = fopen(pathUsuarios, "r");
-    if (!fUser) {
-        printf("Arquivo de usuarios nao foi aberto!");
-        exit(1);
-    }
+Usuario *CriaUsuario(FILE *fUser) {
+    if (!fUser) return NULL;
 
     Usuario *user = malloc(sizeof(Usuario));
     char temp[1000];
-    fscanf(fUser, "%[^;];%d;", temp, &user->numPlaylists);
+    fscanf(fUser, "%[^;];%d", temp, &user->numPlaylists);
     user->nome = strdup(temp);
 
     for (int i = 0; i < user->numPlaylists; i++) {
          fscanf(fUser, ";%[^;\n]", temp);
     }
+    
     fscanf(fUser, "\n");
-
-    fclose(fUser);
     return user;
 }
 
-void ImprimeUsuario(Usuario *u) {
-    if (!u) return;
-    printf("%s;%d\n", u->nome, u->numPlaylists);
+void ImprimeUsuario(Usuario *user) {
+    if (!user) return;
+    printf("%s;%d\n", user->nome, user->numPlaylists);
 }
 
-void LiberaUsuario(Usuario *u) {
-    if (!u) return;
-    free(u->nome);
-    free(u);
+void LiberaUsuario(Usuario *user) {
+    if (!user) return;
+    free(user->nome);
+    free(user);
 }
 

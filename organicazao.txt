@@ -1,29 +1,28 @@
 Estruturas a organizar
 
-tUsuário
-{
+tUsuário {
     char *nome;
     tPlaylist *playlist;
     int numPlaylist;
     int numArtistas;
 };
 
-tPlaylist
-{
+tPlaylist {
     tMúsicas;
     char *nome;
 };
 
-tMúsicas
-{
+tMúsicas {
     char *música;
     char *artista;
 };
 
-tAmizades
-{
+tAmizades {
     char *amg1;
     char *amg2;
     int artistas_em_comum;
     tPlaylist *playlistFatoradas;
 };
+
+1 - listas normais para playlist, usuarios e amizades
+2 - playlist e musica

@@ -9,6 +9,4 @@ void LiberaUsuario(Usuario *usuario);
 
 void ImprimeUsuario(Usuario *usuario);
 
-
-
 #endif // !_USUARIO_H

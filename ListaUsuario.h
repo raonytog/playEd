@@ -17,7 +17,4 @@ void ImprimeListaUsuario(ListaUsuario *lista);
 
 void LiberaListaUsuario(ListaUsuario *lista);
 
-int EhListaUsuarioVazia(ListaUsuario *lista);
-
-
 #endif // !_LISTAUSUARIO_H_

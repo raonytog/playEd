@@ -10,7 +10,6 @@ struct Celula {
     Usuario *usuario;
     Celula *proximo;
 };
-
 struct ListaUsuario {
     Celula *prim, *ult;
 };
@@ -40,6 +39,7 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
     while ( fscanf(fAmizades, "%[^;\n]%*c", nome) == 1) {
         Usuario *usuario = CriaUsuario(nome);
         InsereListaUsuario(lista, usuario);
+        RetiraListaUsuario(lista, usuario);
     }
 
     fclose(fAmizades);
@@ -61,7 +61,38 @@ void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     lista->ult = c;
 }
 
-void RetiraListaUsuario(ListaUsuario *lista, Usuario *user);
+void RetiraListaUsuario(ListaUsuario *lista, Usuario *user) {
+    if (!lista || !user || !lista->prim) return;
+
+    Celula *auxiliar = lista->prim, *ant;
+    if (auxiliar->usuario == user) {
+        lista->prim = lista->prim->proximo;
+        LiberaUsuario(auxiliar->usuario);
+        free(auxiliar);
+
+        if (!lista->prim) lista->ult = NULL;
+        
+        return;
+    }
+
+    while (auxiliar) {
+        // se for o usuario desejado
+        if (auxiliar->usuario == user) {
+            ant->proximo = auxiliar->proximo;
+
+            // se for o ultimo usuario
+            if(auxiliar == lista->ult) 
+                lista->ult = ant;
+
+            LiberaUsuario(auxiliar->usuario);
+            free(auxiliar);
+            return;
+        }
+
+        ant = auxiliar;
+        auxiliar = auxiliar->proximo;
+    }
+}
 
 void ImprimeListaUsuario(ListaUsuario *lista) {
     if (!lista) return;
@@ -85,10 +116,4 @@ void LiberaListaUsuario(ListaUsuario *lista) {
     }
 
     free(lista);
-}
-
-int EhListaUsuarioVazia(ListaUsuario *lista) {
-    if (!lista) return -1;
-    if (!lista->prim) return 1;
-    return 0;
 }

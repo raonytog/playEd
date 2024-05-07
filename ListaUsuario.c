@@ -10,6 +10,7 @@ struct Celula {
     Usuario *usuario;
     Celula *proximo;
 };
+
 struct ListaUsuario {
     Celula *prim, *ult;
 };
@@ -39,7 +40,6 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
     while ( fscanf(fAmizades, "%[^;\n]%*c", nome) == 1) {
         Usuario *usuario = CriaUsuario(nome);
         InsereListaUsuario(lista, usuario);
-        RetiraListaUsuario(lista, usuario);
     }
 
     fclose(fAmizades);
@@ -52,7 +52,7 @@ void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     c->proximo = NULL;
     c->usuario = user;
 
-    if (EhListaUsuarioVazia(lista) == 1) {
+    if (!lista->prim) {
         lista->prim = lista->ult = c;
         return;
     }

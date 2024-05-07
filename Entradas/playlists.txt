@@ -1,3 +1,3 @@
-Raony;3;joji.txt;mitski.txt;laufey.txt.
-Malu;2;baco.txt;taylor-swift.txt
-Gabriel;2;taylor-swift.txt;sza.txt
+Raony;2;mitski.txt;highkey.txt
+Malu;1;praia.txt
+Gabriel;1;pop.txt

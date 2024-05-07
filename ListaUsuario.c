@@ -11,7 +11,6 @@ struct Celula {
     Celula *proximo;
 };
 
-
 struct ListaUsuario {
     Celula *prim, *ult;
 };

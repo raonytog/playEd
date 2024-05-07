@@ -1,14 +1,14 @@
 #ifndef _USUARIO_H_
-#define _USUARIO_H
-
-#include <stdio.h>
+#define _USUARIO_H_
 
 typedef struct Usuario Usuario;
 
-Usuario *CriaUsuario(FILE *fUser);
+Usuario *CriaUsuario(char *nome);
 
-void ImprimeUsuario(Usuario *user);
+void LiberaUsuario(Usuario *usuario);
 
-void LiberaUsuario(Usuario *user);
+void ImprimeUsuario(Usuario *usuario);
 
-#endif // !_USUARIO_H_
+
+
+#endif // !_USUARIO_H

@@ -1,38 +1,36 @@
 #include "Usuario.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 struct Usuario {
     char *nome;
-    int numArtista, numPlaylists;
-    // playlist
+    // playlists
+    // amizades
 };
 
-Usuario *CriaUsuario(FILE *fUser) {
-    if (!fUser) return NULL;
+Usuario *CriaUsuario(char *nome) {
+    if (!nome) return NULL;
 
-    Usuario *user = malloc(sizeof(Usuario));
-    char temp[1000];
-    fscanf(fUser, "%[^;];%d", temp, &user->numPlaylists);
-    user->nome = strdup(temp);
+    Usuario *pessoa = malloc(sizeof(Usuario));
+    if (!pessoa) return NULL;
 
-    for (int i = 0; i < user->numPlaylists; i++) {
-         fscanf(fUser, ";%[^;\n]", temp);
+    pessoa->nome = strdup(nome);
+    if (!pessoa->nome) {
+        free(pessoa);
+        return NULL;
     }
-    
-    fscanf(fUser, "\n");
-    return user;
+
+    return pessoa;
 }
 
-void ImprimeUsuario(Usuario *user) {
-    if (!user) return;
-    printf("%s;%d\n", user->nome, user->numPlaylists);
+void LiberaUsuario(Usuario *usuario) {
+    if (!usuario) return;
+    if (usuario->nome) free(usuario->nome);
+    free(usuario);
 }
 
-void LiberaUsuario(Usuario *user) {
-    if (!user) return;
-    free(user->nome);
-    free(user);
+void ImprimeUsuario(Usuario *usuario) {
+    printf("Nome: %s\n", usuario->nome);
 }
-

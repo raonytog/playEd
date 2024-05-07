@@ -3,12 +3,7 @@
 # compila e executa o programa
 run:
 	make compile
-	./prog
-
-# compila e testa com o argv
-try:
-	make compile
-	./prog testes/
+	./prog Entradas/
 
 # limpa o terminal e compila
 compile:
@@ -18,4 +13,4 @@ compile:
 # compila e executa o valgrind
 valgrind:
 	make compile
-	valgrind --leak-check=full ./prog testes/
+	valgrind --leak-check=full -s ./prog Entradas/

@@ -1,3 +1,0 @@
-Raony;3;joji.txt;mitski.txt;taylor-swift.txt
-Malu;2;baco.txt;taylor-swift.txt
-Barbara;1;phoebe.txt

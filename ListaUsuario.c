@@ -52,10 +52,6 @@ void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     c->proximo = NULL;
     c->usuario = user;
 
-    if (EhListaUsuarioVazia(lista) == 1) {
-        lista->prim = lista->ult = c;
-        return;
-    }
 
     lista->ult->proximo = c;
     lista->ult = c;

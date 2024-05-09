@@ -44,7 +44,31 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
 
     fclose(fAmizades);
 }
+void LePlaylistsUsuarios(ListaUsuario *lista){
+     if (!lista) return;
+    
+    FILE *fPlaylists = NULL;
+    fPlaylists = fopen("Entradas/playlists.txt", "r");
+    if (!fPlaylists) {
+        printf("Nao foi possivel abrir o arquivo de amizades\n");
+        return;
+    }
 
+    char nome[100];
+    int numPlaylist = 0;
+    Celula *c = lista->prim;
+   
+    while ( (fscanf(fPlaylists, "%[^;\n]%*c%d;",nome, &numPlaylist) == 1) && c) {
+        InsereNumPlaylistUsuario( c->usuario,numPlaylist);
+        for(int i = 0;i<numPlaylist;i++){
+                fscanf(fPlaylists, "%[^;\n]%*c",nome);
+        }
+        c = c->proximo;
+    }
+
+    
+    fclose(fPlaylists);
+}
 void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     if (!lista || !user) return;
 

@@ -5,6 +5,10 @@ typedef struct Usuario Usuario;
 
 Usuario *CriaUsuario(char *nome);
 
+void InserePlaylistUsuario(Usuario *usuario);
+
+void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist);
+
 void LiberaUsuario(Usuario *usuario);
 
 void ImprimeUsuario(Usuario *usuario);

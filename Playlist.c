@@ -1,6 +1,7 @@
 #include"Playlist.h"
 #include<stdlib.h>
 #include<stdio.h>
+
 typedef struct celula celula;
 
 struct celula
@@ -15,12 +16,12 @@ struct Playlist {
 };
 
 Playlist *CriaPlaylist(char *nome){
-    Playlist *play = calloc(1, sizeof(Playlist));
+    Playlist *play = malloc(sizeof(Playlist));
     if(!play) return NULL;
     play->nome = strdup(nome);
+    play->prim=play->ultima= NULL;
     return play;
 }
-
 void InsereMusicasPlaylist(Playlist *play){
     if (!play) return;
     

@@ -9,6 +9,10 @@ ListaUsuario *IniciaListaUsuario();
 
 void LeUsuariosDoArquivo(ListaUsuario *lista);
 
+void LePlaylistsUsuarios(ListaUsuario *lista);
+
+void PreenchePlaylistUsuarios(ListaUsuario *lista);
+
 void InsereListaUsuario(ListaUsuario *lista, Usuario *user);
 
 void RetiraListaUsuario(ListaUsuario *lista, Usuario *user);

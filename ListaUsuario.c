@@ -34,16 +34,18 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
         printf("Nao foi possivel abrir o arquivo de amizades\n");
         return;
     }
-
+    char flag;
     char nome[100];
-    while ( fscanf(fAmizades, "%[^;\n]%*c", nome) == 1) {
+    while ( fscanf(fAmizades, "%[^;\n]%c", nome, &flag) == 2) {
+      
         Usuario *usuario = CriaUsuario(nome);
         InsereListaUsuario(lista, usuario);
-        RetiraListaUsuario(lista, usuario);
+        if(flag =='\n') break;
     }
 
     fclose(fAmizades);
 }
+
 void LePlaylistsUsuarios(ListaUsuario *lista){
      if (!lista) return;
     
@@ -58,10 +60,11 @@ void LePlaylistsUsuarios(ListaUsuario *lista){
     int numPlaylist = 0;
     Celula *c = lista->prim;
    
-    while ( (fscanf(fPlaylists, "%[^;\n]%*c%d;",nome, &numPlaylist) == 1) && c) {
+    while ( (fscanf(fPlaylists, "%[^;\n]%*c%d;",nome, &numPlaylist) == 2) && c) {
         InsereNumPlaylistUsuario( c->usuario,numPlaylist);
         for(int i = 0;i<numPlaylist;i++){
                 fscanf(fPlaylists, "%[^;\n]%*c",nome);
+                InserePlaylistUsuario(c->usuario, nome);
         }
         c = c->proximo;
     }
@@ -69,6 +72,16 @@ void LePlaylistsUsuarios(ListaUsuario *lista){
     
     fclose(fPlaylists);
 }
+void PreenchePlaylistUsuarios(ListaUsuario *lista){
+    Celula *c = lista->prim;
+    while (c)
+    {
+         PreenchePlaylistUsuario(c->usuario);
+         c = c->proximo;
+    }
+    
+}
+
 void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     if (!lista || !user) return;
 
@@ -76,7 +89,10 @@ void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     c->proximo = NULL;
     c->usuario = user;
 
-
+    if(!lista->prim){
+        lista->prim=lista->ult=c;
+        return;
+    }
     lista->ult->proximo = c;
     lista->ult = c;
 }

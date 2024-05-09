@@ -10,7 +10,7 @@
 int main () {
     ListaUsuario *lista = IniciaListaUsuario();
     LeUsuariosDoArquivo(lista);
-
+    
     ImprimeListaUsuario(lista);
 
     LiberaListaUsuario(lista);

@@ -15,4 +15,5 @@ int main () {
     ImprimeListaUsuario(lista);
 
     LiberaListaUsuario(lista);
+    return 0;
 }

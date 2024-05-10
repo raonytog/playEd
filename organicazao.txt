@@ -1,28 +1,5 @@
-Estruturas a organizar
-
-tUsuário { // raony
-    char *nome;
-    tPlaylist *playlist;
-    int numPlaylist;
-    int numArtistas;
-};
-
-tPlaylist { // malu
-    tMúsicas;
-    char *nome;
-};
-
-tMúsicas { // malu
-    char *música;
-    char *artista;
-};
-
 tAmizades { // deus
     char *amg1;
     char *amg2;
-    int artistas_em_comum;
-    tPlaylist *playlistFatoradas;
 };
 
-1 - listas normais para playlist, usuarios e amizades
-2 - playlist e musica

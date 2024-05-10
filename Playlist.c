@@ -27,7 +27,7 @@ void InsereMusicasPlaylist(Playlist *play){
     
     char arqPlayNome[100];
     FILE *fPlaylist = NULL;
-    sprintf(arqPlayNome, "%s.txt", play->nome);
+    sprintf(arqPlayNome, "Entradas/%s", play->nome);
     fPlaylist = fopen(arqPlayNome, "r");
    
     if (!fPlaylist) {

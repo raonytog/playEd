@@ -21,6 +21,8 @@ void ImprimeListaUsuario(ListaUsuario *lista);
 
 Usuario *AchaUsuarioNome(ListaUsuario *lista, char *nome);
 
+void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista);
+
 void LiberaListaUsuario(ListaUsuario *lista);
 
 #endif // !_LISTAUSUARIO_H_

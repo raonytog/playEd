@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include"Amizade.h"
 #include "Usuario.h"
 #include "ListaUsuario.h"
 
@@ -13,7 +13,7 @@ int main () {
 
     LePlaylistsUsuarios(lista);
     PreenchePlaylistUsuarios(lista);
-  
+    
     ImprimeListaUsuario(lista);
     LiberaListaUsuario(lista);
     return 0;

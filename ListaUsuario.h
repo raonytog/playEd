@@ -19,6 +19,8 @@ void RetiraListaUsuario(ListaUsuario *lista, Usuario *user);
 
 void ImprimeListaUsuario(ListaUsuario *lista);
 
+Usuario *AchaUsuarioNome(ListaUsuario *lista, char *nome);
+
 void LiberaListaUsuario(ListaUsuario *lista);
 
 #endif // !_LISTAUSUARIO_H_

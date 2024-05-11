@@ -2,6 +2,10 @@
     "files.associations": {
         "usuario.h": "c",
         "string.h": "c",
-        "listausuarios.h": "c"
-    }
+        "listausuarios.h": "c",
+        "amizades.h": "c",
+        "stdlib.h": "c",
+        "amizade.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

@@ -9,8 +9,8 @@
 
 int main () {
     ListaUsuario *lista = IniciaListaUsuario();
-  
     LeUsuariosDoArquivo(lista);
+
     LePlaylistsUsuarios(lista);
     PreenchePlaylistUsuarios(lista);
   

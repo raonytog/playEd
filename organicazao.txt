@@ -1,5 +1,0 @@
-tAmizades { // deus
-    char *amg1;
-    char *amg2;
-};
-

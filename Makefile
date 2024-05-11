@@ -3,7 +3,7 @@
 # compila e executa o programa
 run:
 	make compile
-	./prog Entradas/
+	./prog
 
 # limpa o terminal e compila
 compile:
@@ -13,4 +13,4 @@ compile:
 # compila e executa o valgrind
 valgrind:
 	make compile
-	valgrind --leak-check=full -s ./prog Entradas/
+	valgrind --leak-check=full -s --track-origins=yes  ./prog

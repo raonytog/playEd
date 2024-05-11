@@ -1,27 +1,29 @@
-#include"Playlist.h"
-#include<stdlib.h>
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-typedef struct celula celula;
+#include "Playlist.h"
 
-struct celula
-{   Musica *musica;
-    celula *prox;
+typedef struct Celula Celula;
+
+struct Celula {
+    Musica *musica;
+    Celula *prox;
 };
 
 struct Playlist {
     char *nome;
-    celula *prim;
-    celula *ultima; 
+    Celula *prim, *ultima;
 };
 
 Playlist *CriaPlaylist(char *nome){
     Playlist *play = malloc(sizeof(Playlist));
     if(!play) return NULL;
     play->nome = strdup(nome);
-    play->prim=play->ultima= NULL;
+    play->prim = play->ultima = NULL;
     return play;
 }
+
 void InsereMusicasPlaylist(Playlist *play){
     if (!play) return;
     
@@ -36,57 +38,56 @@ void InsereMusicasPlaylist(Playlist *play){
     }
 
     char nomeArt[100], nomeMusica[100];
-    celula *aux = NULL;
+    Celula *aux = NULL;
     while ( fscanf(fPlaylist, "%[^-]- %[^\n]%*c", nomeArt, nomeMusica) == 2) {
         
-        celula *c = calloc(1, sizeof(celula));
+        Celula *c = malloc(sizeof(Celula));
         c->musica = CriaMusica(nomeArt, nomeMusica);
         c->prox = NULL;
 
         if(!play->prim){
             play->prim = play->ultima = c;
-        }
-       
-        else{
-    
+
+        } else{
             play->ultima->prox= c;
             play->ultima = c;
         }
-       
     }
 
     fclose(fPlaylist);
-    
 }
 
 void LiberaPlaylist(Playlist *playlist){
     if(!playlist) return;
-    celula *aux = playlist->prim->prox;
+    Celula *auxiliar = playlist->prim->prox;
     
-    while(aux){
-       aux =  playlist->prim->prox;
+    while(auxiliar) {
+       auxiliar = playlist->prim->prox;
        LiberaMusica(playlist->prim->musica);
        free(playlist->prim);
-       playlist->prim = aux;
+       playlist->prim = auxiliar;
     }
+
     free(playlist->nome);
     free(playlist);
 }
 
 void ImprimePlaylistArquivo(Playlist *playlist){
-    if(playlist){
-        char nomeArq[100];
-        sprintf(nomeArq,"saida%s.txt",playlist->nome);
-        FILE *playlistArq = fopen(nomeArq, "w");
-        if(playlistArq){
-            
-            celula *aux = playlist->prim;
-            while(aux){
-                ImprimeMusicaArquivo(aux->musica, playlistArq);
-                aux = aux->prox;
-            }  
-            fclose(playlistArq);    
-        } 
+    if (!playlist) return;
+
+    char nomeArq[100];
+    sprintf(nomeArq,"saida%s.txt",playlist->nome);
+    FILE *fPlaylist = fopen(nomeArq, "w");
+    if(!fPlaylist) {
+        printf("Arquivo para impressao nao abriu!");
+        return;
     }
+        
+    Celula *aux = playlist->prim;
+    while(aux){
+        ImprimeMusicaArquivo(aux->musica, fPlaylist);
+        aux = aux->prox;
+    }  
+    fclose(fPlaylist);    
 }
 

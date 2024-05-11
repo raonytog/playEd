@@ -18,11 +18,11 @@ Musica *CriaMusica(char *nomeArt, char *nomeMusica){
 }
 
 void LiberaMusica(Musica *musica){
-    if(musica){
-        free(musica->nome);
-        free(musica->artista);
-        free(musica);
-    }
+    if(!musica) return;
+    
+    free(musica->nome);
+    free(musica->artista);
+    free(musica);
 }
 
 void ImprimeMusicaArquivo(Musica *music, FILE *arq){

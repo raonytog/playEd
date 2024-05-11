@@ -10,6 +10,7 @@ struct Celula {
     Usuario *usuario;
     Celula *proximo;
 };
+
 struct ListaUsuario {
     Celula *prim, *ult;
 };
@@ -34,10 +35,9 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
         printf("Nao foi possivel abrir o arquivo de amizades\n");
         return;
     }
-    char flag;
-    char nome[100];
+
+    char nome[100], flag = '\n';
     while ( fscanf(fAmizades, "%[^;\n]%c", nome, &flag) == 2) {
-      
         Usuario *usuario = CriaUsuario(nome);
         InsereListaUsuario(lista, usuario);
         if(flag =='\n') break;
@@ -56,30 +56,29 @@ void LePlaylistsUsuarios(ListaUsuario *lista){
         return;
     }
 
-    char nome[100];
+    char nomePessoa[100] = "\0", nomePlaylist[100] = "\0", flag = '\0';
     int numPlaylist = 0;
-    Celula *c = lista->prim;
-   
-    while ( (fscanf(fPlaylists, "%[^;\n]%*c%d;",nome, &numPlaylist) == 2) && c) {
-        InsereNumPlaylistUsuario( c->usuario,numPlaylist);
-        for(int i = 0;i<numPlaylist;i++){
-                fscanf(fPlaylists, "%[^;\n]%*c",nome);
-                InserePlaylistUsuario(c->usuario, nome);
-        }
-        c = c->proximo;
-    }
+    Celula *celula = lista->prim;
 
+    while ( fscanf(fPlaylists, "%[^;\n];%d", nomePessoa, &numPlaylist) == 2 && celula) {
+        InsereNumPlaylistUsuario(celula->usuario, numPlaylist);
+        for (int i = 0; i < numPlaylist; i++) {
+            fscanf(fPlaylists, ";%[^;\n]", nomePlaylist);
+            //InserePlaylistUsuario(celula->usuario, nomePlaylist);
+        }
+        fscanf(fPlaylists, "%*c");
+        celula = celula->proximo;
+    }
     
     fclose(fPlaylists);
 }
+
 void PreenchePlaylistUsuarios(ListaUsuario *lista){
     Celula *c = lista->prim;
-    while (c)
-    {
-         PreenchePlaylistUsuario(c->usuario);
-         c = c->proximo;
+    while (c) {
+        PreenchePlaylistUsuario(c->usuario);
+        c = c->proximo;
     }
-    
 }
 
 void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
@@ -90,9 +89,10 @@ void InsereListaUsuario(ListaUsuario *lista, Usuario *user) {
     c->usuario = user;
 
     if(!lista->prim){
-        lista->prim=lista->ult=c;
+        lista->prim = lista->ult=c;
         return;
     }
+    
     lista->ult->proximo = c;
     lista->ult = c;
 }
@@ -147,9 +147,9 @@ void LiberaListaUsuario(ListaUsuario *lista) {
     while (auxiliar) {
         auxiliar = lista->prim->proximo;
         LiberaUsuario(lista->prim->usuario);
-        free(lista->prim);
+        free(lista->prim); lista->prim = NULL;
         lista->prim = auxiliar;
     }
 
-    free(lista);
+    free(lista); lista = NULL;
 }

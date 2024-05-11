@@ -1,3 +1,0 @@
-Raony;6;Chase Atlantic.txt;Mac Miller.txt;Mitski.txt;MUNA.txt;Tommy Richman.txt;Travis Scott.txt
-Malu;3;Antonio Carlos Jobim.txt;Cazuza.txt;Seu Jorge.txt
-Gabriel;3;Mitski.txt;Olivia Rodrigo.txt;Taylor Swift.txt

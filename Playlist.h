@@ -13,4 +13,7 @@ void LiberaPlaylist(Playlist *playlist);
 
 void ImprimePlaylistArquivo(Playlist *playlist);
 
+void EhIgualPlaylist(char* nome, Playlist *play);
+
+void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista);
 #endif // !_MUSICA_H

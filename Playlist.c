@@ -5,6 +5,7 @@
 #include "Playlist.h"
 
 typedef struct Celula Celula;
+typedef struct CelulaPlay CelulaPlay;
 
 struct Celula {
     Musica *musica;
@@ -15,6 +16,14 @@ struct Playlist {
     char *nome;
     Celula *prim, *ultima;
 };
+struct CelulaPlay {
+    Playlist *musica;
+    Celula *prox;
+};
+typedef struct ListaPlaylist {
+    CelulaPlay *ini;
+    CelulaPlay *fim;
+} ListaPlaylist;
 
 Playlist *CriaPlaylist(char *nome){
     Playlist *play = malloc(sizeof(Playlist));
@@ -91,3 +100,28 @@ void ImprimePlaylistArquivo(Playlist *playlist){
     fclose(fPlaylist);    
 }
 
+void EhIgualPlaylist(char* nome, Playlist *play){
+    return (!strcomp(nome, play->nome));
+}
+
+void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista){
+    if(!play) return;
+    Celula *aux = play->prim;
+
+    while(aux){
+        Musica *m = aux->musica;
+        if(lista->ini==NULL){
+            Playlist *play = CriaPlaylist(RetornaArtista(m));
+        }
+        else{
+            CelulaPlay *cp = lista->ini;
+            while(cp)
+                
+                if(strcmp(RetornaArtista(m), play->nome)!=0){
+            }
+        
+        }
+        
+        aux = aux->prox;
+    }
+}

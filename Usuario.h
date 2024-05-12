@@ -1,6 +1,6 @@
 #ifndef _USUARIO_H_
 #define _USUARIO_H_
-
+typedef struct ListaAmizade ListaAmizade;
 #include "Amizade.h"
 
 typedef struct Usuario Usuario;
@@ -16,6 +16,8 @@ void LiberaUsuario(Usuario *usuario);
 void ImprimeUsuario(Usuario *usuario);
 
 void PreenchePlaylistUsuario(Usuario *usuario);
+
+char *RetornaNomeUsuario(Usuario *usuario);
 
 ListaAmizade *RetornaListaAmizade(Usuario *usuario);
 

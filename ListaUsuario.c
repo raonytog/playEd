@@ -1,5 +1,5 @@
 #include "ListaUsuario.h"
-
+#include"Amizade.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,11 +36,18 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
         return;
     }
 
-    char nome[100], flag = '\n';
+    char nome[100], nome1[100], flag = '\n';
     while ( fscanf(fAmizades, "%[^;\n]%c", nome, &flag) == 2) {
         Usuario *usuario = CriaUsuario(nome);
         InsereListaUsuario(lista, usuario);
         if(flag =='\n') break;
+    }
+    while (fscanf(fAmizades, "%[^;];%[^\n]%*c", nome, nome1) == 2) {
+        Usuario *u1 = AchaUsuarioNome(lista, nome);
+        Usuario *u2 = AchaUsuarioNome(lista, nome1);
+        if(u1 && u2){
+            RelacionaAmizade(u1, u2);
+        }
     }
 
     fclose(fAmizades);
@@ -138,6 +145,32 @@ void ImprimeListaUsuario(ListaUsuario *lista) {
         ImprimeUsuario(auxiliar->usuario);
         auxiliar = auxiliar->proximo;
     }
+}
+
+Usuario *AchaUsuarioNome(ListaUsuario *lista, char *nome){    
+    if(!nome || !lista) return NULL;
+    if(!strcmp(RetornaNomeUsuario(lista->prim->usuario), nome))   return lista->prim->usuario;
+     
+    Celula *c = lista->prim->proximo;
+    
+    while(c){ 
+        Usuario *u = c->usuario;
+        if(!strcmp(RetornaNomeUsuario(u), nome)) return u;
+        c = c->proximo;
+    }
+    return NULL;
+    }
+
+void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista){
+    if(!lista) return NULL;
+
+    Celula *aux = lista->prim;
+    while (aux){
+        Usuario *u = aux->usuario;
+        SeparaPlaylist(u);
+        aux = aux->proximo;
+    }
+    
 }
 
 void LiberaListaUsuario(ListaUsuario *lista) {

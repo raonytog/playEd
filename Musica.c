@@ -30,3 +30,14 @@ void ImprimeMusicaArquivo(Musica *music, FILE *arq){
         fprintf(arq,"%s - %s\n", music->artista, music->nome);
     }
 }
+
+
+char *RetornaMusica(Musica *music){
+    if(!music) return NULL;
+    return music->nome;
+}
+
+char *RetornaArtista(Musica *music){
+    if(!music) return NULL;
+    return music->artista;
+}

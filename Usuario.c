@@ -21,6 +21,7 @@ struct Usuario {
     char *nome;
     int numPlaylists;
     ListaPlaylist *playlists;
+    ListaPlaylist *playlistsArtistas;
     ListaAmizade *amigos;
 };
 
@@ -33,6 +34,7 @@ Usuario *CriaUsuario(char *nome) {
     pessoa->numPlaylists = 0;
 
     pessoa->playlists = malloc(sizeof(ListaPlaylist));
+    pessoa->playlistsArtistas = malloc(sizeof(ListaPlaylist));
     pessoa->playlists->ini = pessoa->playlists->fim = NULL;
 
     pessoa->amigos = CriaListaAmizade();
@@ -92,8 +94,20 @@ void PreenchePlaylistUsuario(Usuario *usuario){
         aux = aux->proxima;
     }
 }
-
+char *RetornaNomeUsuario(Usuario *usuario){
+    if(!usuario) return NULL;
+    return usuario->nome;
+}
 ListaAmizade *RetornaListaAmizade(Usuario *usuario) {
-    if (!usuario) return;
+    if (!usuario) return NULL;
     return usuario->amigos;
 }
+
+ void SeparaPlaylist(Usuario *usuario){
+    if(!usuario) return;
+    Celula *c = usuario->playlists->ini;
+    while(c){
+        
+    }
+
+ }

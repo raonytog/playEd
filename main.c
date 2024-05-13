@@ -12,7 +12,7 @@ int main () {
 
     LePlaylistsUsuarios(lista);
     PreenchePlaylistUsuarios(lista);
-    
+    SeparaPlaylistArtistasPorUsuario(lista);
     ImprimeListaUsuario(lista);
     LiberaListaUsuario(lista);
     return 0;

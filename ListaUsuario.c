@@ -71,7 +71,7 @@ void LePlaylistsUsuarios(ListaUsuario *lista){
         InsereNumPlaylistUsuario(celula->usuario, numPlaylist);
         for (int i = 0; i < numPlaylist; i++) {
             fscanf(fPlaylists, ";%[^;\n]", nomePlaylist);
-            //InserePlaylistUsuario(celula->usuario, nomePlaylist);
+            InserePlaylistUsuario(celula->usuario, nomePlaylist, 1);
         }
         fscanf(fPlaylists, "%*c");
         celula = celula->proximo;

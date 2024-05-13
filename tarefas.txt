@@ -1,0 +1,13 @@
+O que fazer hoje/amanhã/quarta:
+
+-Mudar onde fica e estrtura da struct de amizade;
+-Fazer saidas de playlist;
+-Fazer arquivos similidaridades e playlist refatorada;
+
+Depois Urgente:
+
+-Valgrind;
+
+Depois Extra:
+
+-Funções extras;

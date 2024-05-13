@@ -5,10 +5,12 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
+typedef struct Usuario Usuario;
 typedef struct Playlist Playlist;
 typedef struct ListaPlaylist ListaPlaylist;
 
 typedef struct Celula Celula;
+
 #include"Usuario.h"
 #include"Musica.h"
 
@@ -26,13 +28,13 @@ void ImprimePlaylistArquivo(Playlist *playlist);
 
 bool EhIgualPlaylist(char* nome, Playlist *play);
 
-void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista);
+void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usuario);
 
 Playlist *InserePlaylistLista(ListaPlaylist *lista, char *nome);
 
-void InsereMusicaPlaylist(Playlist *play, Celula *c);
+void InsereMusicaPlaylist(Playlist *play, Musica *musica);
 
-void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *final);
+void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *final, Usuario *usuario);
 
 void PreencheListasPlaylistUsuario(ListaPlaylist *lista);
 

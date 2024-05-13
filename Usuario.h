@@ -1,8 +1,10 @@
 #ifndef _USUARIO_H_
 #define _USUARIO_H_
+
 typedef struct Playlist Playlist;
-#include "Playlist.h"
 typedef struct ListaAmizade ListaAmizade;
+
+#include "Playlist.h"
 #include "Amizade.h"
 
 typedef struct Usuario Usuario;
@@ -21,8 +23,20 @@ void PreenchePlaylistUsuario(Usuario *usuario);
 
 char *RetornaNomeUsuario(Usuario *usuario);
 
+int RetornaNumArtistas(Usuario *usuario);
+
+int RetornaNumPlaylists(Usuario *usuario);
+
+ListaPlaylist *RetornaListaPlaylistUsuario(Usuario *usuario);
+
+ListaPlaylist *RetornaListaArtistaUsuario(Usuario *usuario);
+
+ListaAmizade *RetornaListaAmizadeUsuario(Usuario *usuario);
+
+void IncrementaNumeroArtistasUsuario(Usuario *usuario);
+
 void SeparaPlaylist(Usuario *Usuario);
 
-ListaAmizade *RetornaListaAmizade(Usuario *usuario);
+
 
 #endif // !_USUARIO_H

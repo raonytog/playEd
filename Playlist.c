@@ -6,6 +6,7 @@
 typedef struct Celula Celula;
 typedef struct CelulaPlay CelulaPlay;
 
+/* playlist de musicas */
 struct Celula {
     Musica *musica;
     Celula *prox;
@@ -16,6 +17,7 @@ struct Playlist {
     Celula *prim, *ultima;
 };
 
+/* lista de playlists*/
 struct CelulaPlay {
     CelulaPlay *proxima;
     Playlist *p;  
@@ -111,33 +113,40 @@ bool EhIgualPlaylist(char* nome, Playlist *play){
     return (!strcmp(nome, play->nome));
 }
 
-void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *final){
+// playlist normal, playlist artista
+void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *final, Usuario *usuario) {
     if(!inicial) return;
-    CelulaPlay *c = inicial->ini;
-    while(c){
-        AnalisaPlaylistsArtistas(c->p, final);
-        c = c->proxima;
+    
+    CelulaPlay *celula = inicial->ini;
+    while(celula){
+        AnalisaPlaylistsArtistas(celula->p, final, usuario);
+        celula = celula->proxima;
     }
 }
 
-void InsereMusicaPlaylist(Playlist *play, Celula *c){
-    if(!play || !c) return;
+void InsereMusicaPlaylist(Playlist *play, Musica *musica){
+    if(!play || !musica) return;
      
-     c->prox = NULL;
+    Celula *celula = malloc(sizeof(Celula));
+    celula->musica = musica;
+    celula->prox = NULL;
 
     if(!play->prim){
-        play->prim = play->ultima = c;
+        play->prim = play->ultima = celula;
 
     } else{
-        play->ultima->prox= c;
-        play->ultima = c;
+        play->ultima->prox= celula;
+        play->ultima = celula;
     }
 
 }
-void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista){
+// normal, artista
+void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usuario){
     if(!play) return;
     Celula *aux = play->prim;
     Celula* aux2= NULL;
+
+    int musicaRepetida = 0;
     
     while(aux){
         Musica *m = aux->musica;
@@ -145,42 +154,44 @@ void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista){
         aux = aux->prox;
         int flag = 0;
 
-        if(lista->ini==NULL){
-            Playlist *play = InserePlaylistLista(lista,RetornaArtista(m));
-            InsereMusicaPlaylist(play, aux2);
+        // se a lista de artista estiver vazia
+        if(lista->ini == NULL){
+            Playlist *play = InserePlaylistLista(lista, RetornaArtista(m));
+            InsereMusicaPlaylist(play, m);
+            IncrementaNumeroArtistasUsuario(usuario);
             flag++;
-        }
-        else{
 
-                CelulaPlay *cp = lista->ini;
-                while(cp){
-
-                    Playlist *play = cp->p;
-                    if(strcmp(RetornaArtista(m), play->nome)==0){
-                       
-                        InsereMusicaPlaylist(play, aux2);
-                        flag++;
-
+        // caso n esteja vazia, procura a pessoa
+        } else {
+            CelulaPlay *cp = lista->ini;
+            while(cp){
+                Playlist *play = cp->p;
+                if(strcmp(RetornaArtista(m), play->nome)==0) { 
+                    Celula *musica = play->prim;
+                    while (musica) {
+                        if (strcmp(RetornaMusica(m), RetornaMusica(musica->musica)) == 0) musicaRepetida = 1;
+                        musica = musica->prox;
+                        break;
+                    }
+                    if (!musicaRepetida) InsereMusicaPlaylist(play, m);
+                    flag++;
                 }
               
-              
-          cp = cp->proxima;
-        }
+                cp = cp->proxima;
+            }
         
-         if(!flag){
-
-                    Playlist *play = InserePlaylistLista(lista,RetornaArtista(m));
-                    InsereMusicaPlaylist(play, aux2);
-                    flag++;
-        } 
+            // caso nao ache a pessoa
+            if(!flag) {
+                Playlist *play = InserePlaylistLista(lista,RetornaArtista(m));
+                InsereMusicaPlaylist(play, m);
+                IncrementaNumeroArtistasUsuario(usuario);
+            } 
+        }
     }
 }
-}
-
-
 
 Playlist *InserePlaylistLista(ListaPlaylist *lista, char *nome) {
-    if (!lista || !nome) return;
+    if (!lista || !nome) return NULL;
 
     Playlist *playlist = CriaPlaylist(nome);
     CelulaPlay *celula = malloc(sizeof(CelulaPlay));
@@ -197,11 +208,8 @@ Playlist *InserePlaylistLista(ListaPlaylist *lista, char *nome) {
         lista->fim = celula;
     }
    
-   
    return playlist;
 }
-
-
 
 void PreencheListasPlaylistUsuario(ListaPlaylist *lista){
     if (!lista) return;

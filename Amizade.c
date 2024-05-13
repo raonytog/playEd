@@ -25,8 +25,8 @@ ListaAmizade *CriaListaAmizade() {
 void RelacionaAmizade(Usuario *u1, Usuario *u2) {
     if (!u1 || !u2) return;
 
-    InsereAmigoListaAmigo( RetornaListaAmizade(u1), u1 );
-    InsereAmigoListaAmigo( RetornaListaAmizade(u2), u2 );
+    InsereAmigoListaAmigo( RetornaListaAmizadeUsuario(u1), u1 );
+    InsereAmigoListaAmigo( RetornaListaAmizadeUsuario(u2), u2 );
 }
 
 void InsereAmigoListaAmigo(ListaAmizade *lista, Usuario *usuario) {

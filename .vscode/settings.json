@@ -5,7 +5,9 @@
         "listausuarios.h": "c",
         "amizades.h": "c",
         "stdlib.h": "c",
-        "amizade.h": "c"
+        "amizade.h": "c",
+        "musica.h": "c",
+        "random": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

@@ -1,26 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 typedef struct Celula Celula;
 typedef struct CelulaPlay CelulaPlay;
+
 #include "Usuario.h"
 
-
-/*struct CelulaPlay {
-    CelulaPlay *proxima;
-    Playlist *p;  
-};
-
-typedef struct ListaPlaylist {
-    CelulaPlay *ini;
-    CelulaPlay *fim;
-} ListaPlaylist;
-*/
 struct Usuario {
     char *nome;
-    int numPlaylists;
+    int numPlaylists, numArtistas;
+
     ListaPlaylist *playlists;
     ListaPlaylist *playlistsArtistas;
+
     ListaAmizade *amigos;
 };
 
@@ -30,10 +23,10 @@ Usuario *CriaUsuario(char *nome) {
     Usuario *pessoa = malloc(sizeof(Usuario));
 
     pessoa->nome = strdup(nome);
-    pessoa->numPlaylists = 0;
+    pessoa->numPlaylists = pessoa->numArtistas = 0;
 
     pessoa->playlists = CriaListaPlaylist();
-    pessoa->playlistsArtistas =CriaListaPlaylist();
+    pessoa->playlistsArtistas = CriaListaPlaylist();
 
     pessoa->amigos = CriaListaAmizade();
     return pessoa;
@@ -54,18 +47,11 @@ void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist) {
     usuario->numPlaylists = numPlaylist;
 }
 
-void CriaPlaylistsDiferentes(Usuario *usuario);
-
 void LiberaUsuario(Usuario *usuario) {
     if (!usuario) return;
 
-    /*if (usuario->playlists->ini) {
-        CelulaPlay *celula = usuario->playlists->ini->proxima;
-        LiberaPlaylist(usuario->playlists->ini->p);
-        free(usuario->playlists->ini);
-        usuario->playlists->ini = celula;
-    }*/
 
+    LiberaListaAmizade(usuario->amigos);
     free(usuario->playlists);
     free(usuario->nome);
     free(usuario);
@@ -84,13 +70,41 @@ char *RetornaNomeUsuario(Usuario *usuario){
     if(!usuario) return NULL;
     return usuario->nome;
 }
-ListaAmizade *RetornaListaAmizade(Usuario *usuario) {
+
+int RetornaNumArtistas(Usuario *usuario) {
+    if (!usuario) return 0;
+    return usuario->numArtistas;
+}
+
+int RetornaNumPlaylists(Usuario *usuario) {
+    if (!usuario) return 0;
+    return usuario->numPlaylists;
+}
+
+ListaPlaylist *RetornaListaPlaylistUsuario(Usuario *usuario) {
+    if (!usuario) return NULL;
+    return usuario->playlists;
+}
+
+ListaPlaylist *RetornaListaArtistaUsuario(Usuario *usuario) {
+    if (!usuario) return NULL;
+    return usuario->playlistsArtistas;
+}
+
+ListaAmizade *RetornaListaAmizadeUsuario(Usuario *usuario) {
     if (!usuario) return NULL;
     return usuario->amigos;
 }
 
- void SeparaPlaylist(Usuario *usuario){
-    if(!usuario) return;
-    AnalisaPlaylistsArtistasIndividual(usuario->playlists, usuario->playlistsArtistas);
 
- }
+void SeparaPlaylist(Usuario *usuario){
+    if(!usuario) return;
+    AnalisaPlaylistsArtistasIndividual(usuario->playlists, 
+                                      usuario->playlistsArtistas, 
+                                      usuario);
+}
+
+void IncrementaNumeroArtistasUsuario(Usuario *usuario) {
+    if (!usuario) return;
+    usuario->numArtistas++;
+}

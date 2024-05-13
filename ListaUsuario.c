@@ -45,9 +45,7 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
     while (fscanf(fAmizades, "%[^;];%[^\n]%*c", nome, nome1) == 2) {
         Usuario *u1 = AchaUsuarioNome(lista, nome);
         Usuario *u2 = AchaUsuarioNome(lista, nome1);
-        if(u1 && u2){
-            RelacionaAmizade(u1, u2);
-        }
+        if(u1 && u2) RelacionaAmizade(u1, u2);
     }
 
     fclose(fAmizades);
@@ -162,15 +160,14 @@ Usuario *AchaUsuarioNome(ListaUsuario *lista, char *nome){
     }
 
 void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista){
-    if(!lista) return NULL;
+    if(!lista) return;
 
     Celula *aux = lista->prim;
     while (aux){
-        Usuario *u = aux->usuario;
-        SeparaPlaylist(u);
+        Usuario *usuario = aux->usuario;
+        SeparaPlaylist(usuario);
         aux = aux->proximo;
     }
-    
 }
 
 void LiberaListaUsuario(ListaUsuario *lista) {

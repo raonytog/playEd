@@ -1,13 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "Amizade.h"
 
 typedef struct Celula Celula;
-
+struct Amizade{
+    Usuario *amigo1;
+    Usuario *amigo2;
+};
 struct Celula {
-    Usuario *amigo;
+    Amizade *relacao;
     Celula *proximo;
 };
 
@@ -22,18 +22,37 @@ ListaAmizade *CriaListaAmizade() {
     return lista;
 }
 
-void RelacionaAmizade(Usuario *u1, Usuario *u2) {
-    if (!u1 || !u2) return;
+void LeArquivoAmizade(FILE *fAmizades, ListaAmizade *amizades, ListaUsuario *lista){
+    if(!fAmizades || !lista || !amizades) return;
+    char nome[100], nome1[100];
+    while (fscanf(fAmizades, "%[^;];%[^\n]%*c", nome, nome1) == 2) {
+        Usuario *u1 = AchaUsuarioNome(lista, nome);
+        Usuario *u2 = AchaUsuarioNome(lista, nome1);
+        if(u1 && u2) {
+            Amizade *amgs = CriaAmizade(u1, u2);
+            InsereAmizadeLista(amizades, amgs);
+            }
+    }
 
-    InsereAmigoListaAmigo( RetornaListaAmizadeUsuario(u1), u1 );
-    InsereAmigoListaAmigo( RetornaListaAmizadeUsuario(u2), u2 );
+    fclose(fAmizades);
+
 }
 
-void InsereAmigoListaAmigo(ListaAmizade *lista, Usuario *usuario) {
-    if (!lista || !usuario) return;
+Amizade *CriaAmizade(Usuario *usuario1, Usuario *usuario2){
+    if(!usuario1 || !usuario2) return NULL;
+
+    Amizade *amgs = malloc(sizeof(Amizade));
+    if(!amgs) return NULL;
+    amgs->amigo1 = usuario1;
+    amgs->amigo2 = usuario2;
+    return amgs;
+}
+
+void InsereAmizadeLista(ListaAmizade *lista, Amizade *amgs) {
+    if (!lista || !amgs) return;
 
     Celula *celula = malloc(sizeof(Celula));
-    celula->amigo = usuario;
+    celula->relacao = amgs;
     celula->proximo = NULL;
 
     if (!lista->inic && !lista->fim) {

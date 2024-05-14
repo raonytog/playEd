@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "Playlist.h"
-
+#include <sys/stat.h> 
+#include <sys/types.h> 
 typedef struct Celula Celula;
 typedef struct CelulaPlay CelulaPlay;
 
@@ -218,4 +219,30 @@ void PreencheListasPlaylistUsuario(ListaPlaylist *lista){
         InsereMusicasPlaylist(aux->p);
         aux = aux->proxima;
     }
+}
+
+
+void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists){
+
+    if(!nome || !playlists) return;
+
+    CelulaPlay *aux = playlists->ini;
+    char caminho1[150], caminho[200];
+    sprintf(caminho1, "Saidas/%s", nome);
+    int arq = mkdir(caminho1, 0777);
+    if(arq==-1) printf("Erro ao criar diretorios");
+    while(aux){
+        
+        sprintf(caminho, "%s/%s.txt", caminho1, aux->p->nome);
+        FILE *arquivoPlaylist = fopen(caminho, "w");
+        if(!arquivoPlaylist) return;
+        Celula *musicas = aux->p->prim;
+        while (musicas)
+        {   ImprimeMusicaArquivo(musicas->musica, arquivoPlaylist);
+            musicas = musicas->prox;
+        }
+        fclose(arquivoPlaylist);
+        aux = aux->proxima;
+    }
+
 }

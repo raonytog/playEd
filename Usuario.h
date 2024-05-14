@@ -31,12 +31,8 @@ ListaPlaylist *RetornaListaPlaylistUsuario(Usuario *usuario);
 
 ListaPlaylist *RetornaListaArtistaUsuario(Usuario *usuario);
 
-ListaAmizade *RetornaListaAmizadeUsuario(Usuario *usuario);
-
 void IncrementaNumeroArtistasUsuario(Usuario *usuario);
 
 void SeparaPlaylist(Usuario *Usuario);
-
-
 
 #endif // !_USUARIO_H

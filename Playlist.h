@@ -38,4 +38,5 @@ void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *f
 
 void PreencheListasPlaylistUsuario(ListaPlaylist *lista);
 
+void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists);
 #endif // !_MUSICA_H

@@ -1,16 +1,23 @@
 #ifndef AMIZADE_H_
 #define AMIZADE_H_
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 typedef struct Usuario Usuario;
 #include "Usuario.h"
+typedef struct ListaUsuario ListaUsuario;
+#include "ListaUsuario.h"
 
 typedef struct ListaAmizade ListaAmizade;
+typedef struct Amizade Amizade;
 
 ListaAmizade *CriaListaAmizade();
 
-void RelacionaAmizade(Usuario *u1, Usuario *u2);
+void LeArquivoAmizade(FILE *fAmizades, ListaAmizade *amizades, ListaUsuario *lista);
 
-void InsereAmigoListaAmigo(ListaAmizade *lista, Usuario *usuario);
+Amizade *CriaAmizade(Usuario *usuario1, Usuario *usuario2);
+
+void InsereAmizadeLista(ListaAmizade *lista, Amizade *amgs);
 
 void LiberaListaAmizade(ListaAmizade *lista);
 

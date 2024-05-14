@@ -1,4 +1,6 @@
 #include "ListaUsuario.h"
+#include <sys/stat.h> 
+#include <sys/types.h> 
 #include"Amizade.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,14 +28,14 @@ ListaUsuario *IniciaListaUsuario() {
     return l;
 }
 
-void LeUsuariosDoArquivo(ListaUsuario *lista) {
-    if (!lista) return;
+FILE *LeUsuariosDoArquivo(ListaUsuario *lista) {
+    if (!lista) return NULL;
     
     FILE *fAmizades = NULL;
     fAmizades = fopen("Entradas/amizade.txt", "r");
     if (!fAmizades) {
         printf("Nao foi possivel abrir o arquivo de amizades\n");
-        return;
+        return NULL;
     }
 
     char nome[100], nome1[100], flag = '\n';
@@ -42,13 +44,8 @@ void LeUsuariosDoArquivo(ListaUsuario *lista) {
         InsereListaUsuario(lista, usuario);
         if(flag =='\n') break;
     }
-    while (fscanf(fAmizades, "%[^;];%[^\n]%*c", nome, nome1) == 2) {
-        Usuario *u1 = AchaUsuarioNome(lista, nome);
-        Usuario *u2 = AchaUsuarioNome(lista, nome1);
-        if(u1 && u2) RelacionaAmizade(u1, u2);
-    }
 
-    fclose(fAmizades);
+    return fAmizades;
 }
 
 void LePlaylistsUsuarios(ListaUsuario *lista){
@@ -166,6 +163,19 @@ void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista){
     while (aux){
         Usuario *usuario = aux->usuario;
         SeparaPlaylist(usuario);
+        aux = aux->proximo;
+    }
+}
+
+void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
+    if(!lista) return;
+    Celula *aux = lista->prim;
+    int arq = mkdir("Saidas", 0777);
+    if(arq==-1) printf("Erro ao criar diretorios");
+    while(aux){
+        Usuario *usuario = aux->usuario;
+        ImprimeEmArquivoPlaylistsUsuario(RetornaNomeUsuario(usuario),
+        RetornaListaArtistaUsuario(usuario));
         aux = aux->proximo;
     }
 }

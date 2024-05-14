@@ -1,7 +1,6 @@
 O que fazer hoje/amanhã/quarta:
 
--Mudar onde fica e estrtura da struct de amizade;
--Fazer saidas de playlist;
+-Fazer saidas de playlist e liberar as playlists antigas;
 -Fazer arquivos similidaridades e playlist refatorada;
 
 Depois Urgente:

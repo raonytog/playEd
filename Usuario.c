@@ -14,7 +14,6 @@ struct Usuario {
     ListaPlaylist *playlists;
     ListaPlaylist *playlistsArtistas;
 
-    ListaAmizade *amigos;
 };
 
 Usuario *CriaUsuario(char *nome) {
@@ -27,8 +26,6 @@ Usuario *CriaUsuario(char *nome) {
 
     pessoa->playlists = CriaListaPlaylist();
     pessoa->playlistsArtistas = CriaListaPlaylist();
-
-    pessoa->amigos = CriaListaAmizade();
     return pessoa;
 }
 
@@ -49,9 +46,6 @@ void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist) {
 
 void LiberaUsuario(Usuario *usuario) {
     if (!usuario) return;
-
-
-    LiberaListaAmizade(usuario->amigos);
     free(usuario->playlists);
     free(usuario->nome);
     free(usuario);
@@ -91,12 +85,6 @@ ListaPlaylist *RetornaListaArtistaUsuario(Usuario *usuario) {
     return usuario->playlistsArtistas;
 }
 
-ListaAmizade *RetornaListaAmizadeUsuario(Usuario *usuario) {
-    if (!usuario) return NULL;
-    return usuario->amigos;
-}
-
-
 void SeparaPlaylist(Usuario *usuario){
     if(!usuario) return;
     AnalisaPlaylistsArtistasIndividual(usuario->playlists, 
@@ -108,3 +96,4 @@ void IncrementaNumeroArtistasUsuario(Usuario *usuario) {
     if (!usuario) return;
     usuario->numArtistas++;
 }
+

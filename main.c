@@ -8,10 +8,13 @@
 
 int main () {
     ListaUsuario *lista = IniciaListaUsuario();
-    LeUsuariosDoArquivo(lista); // le e relaciona usuarios
+    ListaAmizade *amizades = CriaListaAmizade();
+    FILE *arquivoInicial = LeUsuariosDoArquivo(lista); // le e relaciona usuarios
+    LeArquivoAmizade(arquivoInicial, amizades, lista);
     LePlaylistsUsuarios(lista); // le as playlists
     PreenchePlaylistUsuarios(lista); // insere as musicas
     SeparaPlaylistArtistasPorUsuario(lista); // cria playlist por artista
+    ImprimeEmArquivoPlaylistsGlobal(lista);
     ImprimeListaUsuario(lista);
     LiberaListaUsuario(lista);
     return 0;

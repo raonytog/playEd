@@ -2,27 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Usuario.h"
-#include "Playlist.h"
-
 typedef struct Celula Celula;
+typedef struct CelulaPlay CelulaPlay;
 
-struct Celula {
-    Celula *proxima;
-    Playlist *p;  
-};
-
-typedef struct ListaPlaylist {
-    Celula *ini;
-    Celula *fim;
-} ListaPlaylist;
+#include "Usuario.h"
 
 struct Usuario {
     char *nome;
-    int numPlaylists;
+    int numPlaylists, numArtistas;
+
     ListaPlaylist *playlists;
     ListaPlaylist *playlistsArtistas;
-    ListaAmizade *amigos;
+
 };
 
 Usuario *CriaUsuario(char *nome) {
@@ -31,32 +22,21 @@ Usuario *CriaUsuario(char *nome) {
     Usuario *pessoa = malloc(sizeof(Usuario));
 
     pessoa->nome = strdup(nome);
-    pessoa->numPlaylists = 0;
+    pessoa->numPlaylists = pessoa->numArtistas = 0;
 
-    pessoa->playlists = malloc(sizeof(ListaPlaylist));
-    pessoa->playlistsArtistas = malloc(sizeof(ListaPlaylist));
-    pessoa->playlists->ini = pessoa->playlists->fim = NULL;
-
-    pessoa->amigos = CriaListaAmizade();
+    pessoa->playlists = CriaListaPlaylist();
+    pessoa->playlistsArtistas = CriaListaPlaylist();
     return pessoa;
 }
 
-void InserePlaylistUsuario(Usuario *usuario, char *nome) {
+void InserePlaylistUsuario(Usuario *usuario, char *nome, int tipo) {
     if (!usuario || !nome) return;
 
-    Playlist *playlist = CriaPlaylist(nome);
-    Celula *celula = malloc(sizeof(Celula));
-    celula->p = playlist;
-    celula->proxima = NULL;
-
-    // lista vazia
-    if (!usuario->playlists->ini && !usuario->playlists->fim) {
-        usuario->playlists->ini = usuario->playlists->fim = celula;
-        return;
-    }
-
-    usuario->playlists->fim->proxima = celula;
-    usuario->playlists->fim = celula;
+    if(tipo == 1){
+        Playlist *p = InserePlaylistLista(usuario->playlists, nome);
+    } 
+    //if(tipo == 2) InserePlaylistLista(usuario->playlistsArtistas, nome);
+  
 }
 
 void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist) {
@@ -64,18 +44,8 @@ void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist) {
     usuario->numPlaylists = numPlaylist;
 }
 
-void CriaPlaylistsDiferentes(Usuario *usuario);
-
 void LiberaUsuario(Usuario *usuario) {
     if (!usuario) return;
-
-    if (usuario->playlists->ini) {
-        Celula *celula = usuario->playlists->ini->proxima;
-        LiberaPlaylist(usuario->playlists->ini->p);
-        free(usuario->playlists->ini);
-        usuario->playlists->ini = celula;
-    }
-
     free(usuario->playlists);
     free(usuario->nome);
     free(usuario);
@@ -88,26 +58,42 @@ void ImprimeUsuario(Usuario *usuario) {
 
 void PreenchePlaylistUsuario(Usuario *usuario){
     if (!usuario) return;
-    Celula *aux = usuario->playlists->ini;
-    while(aux){
-        InsereMusicasPlaylist(aux->p);
-        aux = aux->proxima;
-    }
+    PreencheListasPlaylistUsuario(usuario->playlists);
 }
 char *RetornaNomeUsuario(Usuario *usuario){
     if(!usuario) return NULL;
     return usuario->nome;
 }
-ListaAmizade *RetornaListaAmizade(Usuario *usuario) {
-    if (!usuario) return NULL;
-    return usuario->amigos;
+
+int RetornaNumArtistas(Usuario *usuario) {
+    if (!usuario) return 0;
+    return usuario->numArtistas;
 }
 
- void SeparaPlaylist(Usuario *usuario){
-    if(!usuario) return;
-    Celula *c = usuario->playlists->ini;
-    while(c){
-        
-    }
+int RetornaNumPlaylists(Usuario *usuario) {
+    if (!usuario) return 0;
+    return usuario->numPlaylists;
+}
 
- }
+ListaPlaylist *RetornaListaPlaylistUsuario(Usuario *usuario) {
+    if (!usuario) return NULL;
+    return usuario->playlists;
+}
+
+ListaPlaylist *RetornaListaArtistaUsuario(Usuario *usuario) {
+    if (!usuario) return NULL;
+    return usuario->playlistsArtistas;
+}
+
+void SeparaPlaylist(Usuario *usuario){
+    if(!usuario) return;
+    AnalisaPlaylistsArtistasIndividual(usuario->playlists, 
+                                      usuario->playlistsArtistas, 
+                                      usuario);
+}
+
+void IncrementaNumeroArtistasUsuario(Usuario *usuario) {
+    if (!usuario) return;
+    usuario->numArtistas++;
+}
+

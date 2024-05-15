@@ -11,7 +11,6 @@ struct Celula {
     Celula *proximo;
 };
 
-
 struct ListaAmizade {
     Celula *inic, *fim;
 };
@@ -31,7 +30,7 @@ void LeArquivoAmizade(FILE *fAmizades, ListaAmizade *amizades, ListaUsuario *lis
         if(u1 && u2) {
             Amizade *amgs = CriaAmizade(u1, u2);
             InsereAmizadeLista(amizades, amgs);
-            }
+        }
     }
 
     fclose(fAmizades);
@@ -75,4 +74,35 @@ void LiberaListaAmizade(ListaAmizade *lista) {
     }
 
     free(lista);
+}
+
+void Similaridades(ListaAmizade *lista) {
+    if (!lista) return;
+
+    FILE *fSimilaridades = NULL;
+    fSimilaridades = fopen("Saidas/similaridades.txt", "w");
+    if (!fSimilaridades) {
+        printf("Arquivo de similaridades nao foi aberto corretamente!");
+        return;
+    }
+
+    Celula *celula = lista->inic;
+    while (celula) {
+        ImprimeSimiladiridade(celula->relacao, fSimilaridades);
+        celula = celula->proximo;
+    }
+
+    fclose(fSimilaridades);
+}
+
+void ImprimeSimiladiridade(Amizade *relacao, FILE *file) {
+    if (!relacao) return;
+
+    int qtdMusicasIguais = 0;
+    ListaPlaylist *l1 = RetornaListaArtistaUsuario(relacao->amigo1), *l2 = RetornaListaArtistaUsuario(relacao->amigo2);
+    qtdMusicasIguais = RetornaRelacaoMusicaAmigos(l1, l2);
+
+    fprintf(file, "%s;%s;%d\n", RetornaNomeUsuario(relacao->amigo1), 
+                                RetornaNomeUsuario(relacao->amigo2),
+                                qtdMusicasIguais);
 }

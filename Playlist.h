@@ -1,5 +1,6 @@
 #ifndef _PLAYLIST_H_
 #define _PLALIST_H_
+
 #include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
@@ -39,4 +40,11 @@ void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *f
 void PreencheListasPlaylistUsuario(ListaPlaylist *lista);
 
 void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists);
-#endif // !_MUSICA_H
+
+void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas);
+
+char *RetornaNomePlaylist(Playlist *playlist);
+
+int RetornaRelacaoMusicaAmigos(ListaPlaylist *artistasP1, ListaPlaylist *artistasP2);
+
+#endif

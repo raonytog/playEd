@@ -38,7 +38,7 @@ FILE *LeUsuariosDoArquivo(ListaUsuario *lista) {
         return NULL;
     }
 
-    char nome[100], nome1[100], flag = '\n';
+    char nome[100], flag = '\n';
     while ( fscanf(fAmizades, "%[^;\n]%c", nome, &flag) == 2) {
         Usuario *usuario = CriaUsuario(nome);
         InsereListaUsuario(lista, usuario);
@@ -169,6 +169,7 @@ void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista){
 
 void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
     if(!lista) return;
+
     Celula *aux = lista->prim;
     int arq = mkdir("Saidas", 0777);
     if(arq==-1) printf("Erro ao criar diretorios");
@@ -177,6 +178,18 @@ void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
         ImprimeEmArquivoPlaylistsUsuario(RetornaNomeUsuario(usuario),
         RetornaListaArtistaUsuario(usuario));
         aux = aux->proximo;
+    }
+}
+
+void PlaylistRefatorada(ListaUsuario *lista) {
+    if (!lista) return;
+
+    Celula *celula = lista->prim;
+    while (celula) {
+        ImprimePlaylistRefatorada( RetornaNomeUsuario(celula->usuario), 
+                                   RetornaNumArtistas(celula->usuario),
+                                   RetornaListaArtistaUsuario(celula->usuario));
+        celula = celula->proximo;
     }
 }
 

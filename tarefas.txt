@@ -1,12 +1,9 @@
 O que fazer hoje/amanhã/quarta:
-
--Fazer saidas de playlist e liberar as playlists antigas;
--Fazer arquivos similidaridades e playlist refatorada;
+✓ - Fazer saidas de playlist e liberar as playlists antigas;
+✓ - Fazer arquivos similidaridades e playlist refatorada;
 
 Depois Urgente:
-
 -Valgrind;
 
 Depois Extra:
-
 -Funções extras;

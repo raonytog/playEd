@@ -26,6 +26,8 @@ void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista);
 
 void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista);
 
+void PlaylistRefatorada(ListaUsuario *lista);
+
 void LiberaListaUsuario(ListaUsuario *lista);
 
 #endif // !_LISTAUSUARIO_H_

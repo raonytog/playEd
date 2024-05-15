@@ -59,6 +59,7 @@ void InsereMusicasPlaylist(Playlist *play){
     char nomeArt[100], nomeMusica[100];
     Celula *aux = NULL;
     while ( fscanf(fPlaylist, "%[^-]- %[^\n]%*c", nomeArt, nomeMusica) == 2) {
+        nomeArt[strlen(nomeArt) - 1] = '\0'; // retira espaco armazenado 
         
         Celula *c = malloc(sizeof(Celula));
         c->musica = CriaMusica(nomeArt, nomeMusica);
@@ -222,27 +223,72 @@ void PreencheListasPlaylistUsuario(ListaPlaylist *lista){
 }
 
 
-void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists){
-
+void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
     if(!nome || !playlists) return;
 
     CelulaPlay *aux = playlists->ini;
     char caminho1[150], caminho[200];
     sprintf(caminho1, "Saidas/%s", nome);
+
     int arq = mkdir(caminho1, 0777);
     if(arq==-1) printf("Erro ao criar diretorios");
-    while(aux){
-        
+
+    while(aux) {
         sprintf(caminho, "%s/%s.txt", caminho1, aux->p->nome);
         FILE *arquivoPlaylist = fopen(caminho, "w");
         if(!arquivoPlaylist) return;
+
         Celula *musicas = aux->p->prim;
-        while (musicas)
-        {   ImprimeMusicaArquivo(musicas->musica, arquivoPlaylist);
+        while (musicas) {
+            ImprimeMusicaArquivo(musicas->musica, arquivoPlaylist);
             musicas = musicas->prox;
         }
+        
         fclose(arquivoPlaylist);
         aux = aux->proxima;
     }
+}
 
+void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas) {
+    FILE *fFatorada = NULL;
+    fFatorada = fopen("Saidas/played-fatorada.txt", "a+");
+    if (!fFatorada) {
+        printf("Arquivo de saida da playlist-fatorada nao aberto");
+        return;
+    }
+
+    fprintf(fFatorada, "%s;%d", nome, qtdArtistas);
+    CelulaPlay *celula = playlistArtistas->ini;
+    while (celula) {
+        fprintf(fFatorada, ";%s.txt", RetornaNomePlaylist(celula->p));
+        celula = celula->proxima;
+    }
+    fprintf(fFatorada, "\n");
+
+    fclose(fFatorada);
+}
+
+char *RetornaNomePlaylist(Playlist *playlist) {
+    if (!playlist) return '\0';
+    return playlist->nome;
+}
+
+int RetornaRelacaoMusicaAmigos(ListaPlaylist *artistasP1, ListaPlaylist *artistasP2) {
+    if (!artistasP1 || !artistasP2) return -1;
+
+    int qtdMusicasIguaisTotais = 0;
+    for (CelulaPlay *i = artistasP1->ini; i; i = i->proxima) {
+        for (CelulaPlay *j = artistasP2->ini; j; j = j->proxima) {
+            if (strcmp(RetornaNomePlaylist(i->p), RetornaNomePlaylist(j->p)) == 0) {
+                for (Celula *m = i->p->prim; m; m = m->prox) {
+                    for (Celula *n = j->p->prim; n; n = n->prox) {
+                        if (strcmp(RetornaMusica(m->musica), RetornaMusica(n->musica)) == 0)
+                            qtdMusicasIguaisTotais++;
+                    }
+                }
+            }
+        }
+    }
+
+    return qtdMusicasIguaisTotais;
 }

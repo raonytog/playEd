@@ -277,9 +277,16 @@ int RetornaRelacaoMusicaAmigos(ListaPlaylist *artistasP1, ListaPlaylist *artista
     if (!artistasP1 || !artistasP2) return -1;
 
     int qtdMusicasIguaisTotais = 0;
+    /**
+     * Verifica se as playlists tem o mesmo nome para prosseguir a analise
+    */
     for (CelulaPlay *i = artistasP1->ini; i; i = i->proxima) {
         for (CelulaPlay *j = artistasP2->ini; j; j = j->proxima) {
             if (strcmp(RetornaNomePlaylist(i->p), RetornaNomePlaylist(j->p)) == 0) {
+                /**
+                 * Analisa as musicas da playlist i e j. Caso tenham o mesmo nome,
+                 * quer dizer que ambas compartilham a mesma musica
+                */
                 for (Celula *m = i->p->prim; m; m = m->prox) {
                     for (Celula *n = j->p->prim; n; n = n->prox) {
                         if (strcmp(RetornaMusica(m->musica), RetornaMusica(n->musica)) == 0)

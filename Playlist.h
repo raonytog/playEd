@@ -16,6 +16,15 @@ typedef struct Celula Celula;
 #include"Musica.h"
 
 
+/* Funcoes de retorno */
+
+char *RetornaNomePlaylist(Playlist *playlist);
+
+int RetornaRelacaoMusicaAmigos(ListaPlaylist *artistasP1, ListaPlaylist *artistasP2);
+
+bool EhIgualPlaylist(char* nome, Playlist *play);
+
+/* Funcoes principais do cliente*/
 
 Playlist *CriaPlaylist(char *nome);
 
@@ -23,28 +32,24 @@ ListaPlaylist *CriaListaPlaylist();
 
 void InsereMusicasPlaylist(Playlist *play);
 
-void LiberaPlaylist(Playlist *playlist);
-
-void ImprimePlaylistArquivo(Playlist *playlist);
-
-bool EhIgualPlaylist(char* nome, Playlist *play);
-
-void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usuario);
-
 Playlist *InserePlaylistLista(ListaPlaylist *lista, char *nome);
 
 void InsereMusicaPlaylist(Playlist *play, Musica *musica);
 
+void PreencheListasPlaylistUsuario(ListaPlaylist *lista);
+
+void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usuario);
+
 void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *final, Usuario *usuario);
 
-void PreencheListasPlaylistUsuario(ListaPlaylist *lista);
+void LiberaPlaylist(Playlist *playlist);
+
+/* Funcoes de impressao */
+
+void ImprimePlaylistArquivo(Playlist *playlist);
 
 void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists);
 
 void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas);
-
-char *RetornaNomePlaylist(Playlist *playlist);
-
-int RetornaRelacaoMusicaAmigos(ListaPlaylist *artistasP1, ListaPlaylist *artistasP2);
 
 #endif

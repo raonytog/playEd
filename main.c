@@ -20,24 +20,24 @@ int main () {
      * Le e insre as playlists de casa usuario do sistema
      * Em seguida, preenche cada playlist com suas respectivas musicas
     */
-    LePlaylistsUsuarios(lista);
-    PreenchePlaylistUsuarios(lista);
+    // LePlaylistsUsuarios(lista);
+    // PreenchePlaylistUsuarios(lista);
 
     /**
      * Analisa cada playlist do usuario e preenche uma lista de playlists com
      * playlists separadas por artistas. Em seguida, gera os arquivos correspondentes
      * para cada pessoa e suas playlists dos artistas
     */
-    SeparaPlaylistArtistasPorUsuario(lista); 
-    ImprimeEmArquivoPlaylistsGlobal(lista);
+    // SeparaPlaylistArtistasPorUsuario(lista); 
+    // ImprimeEmArquivoPlaylistsGlobal(lista);
 
     /**
      * Cria as demais saidas requisitadas no trabalho:
      * 1 - Cria e preenche a playlist refatorada de cada usuario do sistema
      * 2 - Analisa as similaridades e preenche o arquivo com as similaridades entre amigos
     */ 
-    PlaylistRefatorada(lista);
-    Similaridades(amizades);
+    // PlaylistRefatorada(lista);
+    // Similaridades(amizades);
 
     LiberaListaAmizade(amizades);
     LiberaListaUsuario(lista);

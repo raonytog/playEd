@@ -69,6 +69,7 @@ void LiberaListaAmizade(ListaAmizade *lista) {
     Celula *auxiliar = lista->inic;
     while (auxiliar) {
         auxiliar = lista->inic->proximo;
+        free(lista->inic->relacao);
         free(lista->inic);
         lista->inic = auxiliar;
     }

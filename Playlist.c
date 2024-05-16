@@ -49,7 +49,7 @@ void InsereMusicasPlaylist(Playlist *play){
     
     char arqPlayNome[100];
     FILE *fPlaylist = NULL;
-    sprintf(arqPlayNome, "Entradas/%s", play->nome);
+    sprintf(arqPlayNome, "Entrada/%s", play->nome);
     fPlaylist = fopen(arqPlayNome, "r");
    
     if (!fPlaylist) {
@@ -243,7 +243,7 @@ void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
 
     CelulaPlay *aux = playlists->ini;
     char caminho1[150], caminho[200];
-    sprintf(caminho1, "Saidas/%s", nome);
+    sprintf(caminho1, "Saida/%s", nome);
 
     int arq = mkdir(caminho1, 0777);
     if(arq==-1) printf("Erro ao criar diretorios");
@@ -266,7 +266,7 @@ void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
 
 void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas) {
     FILE *fFatorada = NULL;
-    fFatorada = fopen("Saidas/played-fatorada.txt", "a+");
+    fFatorada = fopen("Saida/played-fatorada.txt", "a+");
     if (!fFatorada) {
         printf("Arquivo de saida da playlist-fatorada nao aberto");
         return;

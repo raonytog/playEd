@@ -32,7 +32,7 @@ FILE *LeUsuariosDoArquivo(ListaUsuario *lista) {
     if (!lista) return NULL;
     
     FILE *fAmizades = NULL;
-    fAmizades = fopen("Entradas/amizade.txt", "r");
+    fAmizades = fopen("Entrada/amizade.txt", "r");
     if (!fAmizades) {
         printf("Nao foi possivel abrir o arquivo de amizades\n");
         return NULL;
@@ -53,7 +53,7 @@ void LePlaylistsUsuarios(ListaUsuario *lista){
      if (!lista) return;
     
     FILE *fPlaylists = NULL;
-    fPlaylists = fopen("Entradas/playlists.txt", "r");
+    fPlaylists = fopen("Entrada/playlists.txt", "r");
     if (!fPlaylists) {
         printf("Nao foi possivel abrir o arquivo de amizades\n");
         return;

@@ -29,7 +29,6 @@ typedef struct ListaPlaylist {
     CelulaPlay *fim;
 } ListaPlaylist;
 
-
 Playlist *CriaPlaylist(char *nome){
     Playlist *play = malloc(sizeof(Playlist));
     if(!play) return NULL;
@@ -37,12 +36,14 @@ Playlist *CriaPlaylist(char *nome){
     play->prim = play->ultima = NULL;
     return play;
 }
+
 ListaPlaylist *CriaListaPlaylist(){
     ListaPlaylist *play = malloc(sizeof(ListaPlaylist));
     if(!play) return NULL;
     play->ini = play->fim = NULL;
     return play;
 }
+
 void InsereMusicasPlaylist(Playlist *play){
     if (!play) return;
     
@@ -56,10 +57,21 @@ void InsereMusicasPlaylist(Playlist *play){
         return;
     }
 
-    char nomeArt[100], nomeMusica[100];
+    char nomeArt[100], nomeMusica[100], temp[200];
+    int i = 0, j = 0, k = 0;
     Celula *aux = NULL;
-    while ( fscanf(fPlaylist, "%[^-]- %[^\n]%*c", nomeArt, nomeMusica) == 2) {
-        nomeArt[strlen(nomeArt) - 1] = '\0'; // retira espaco armazenado 
+    while ( fscanf(fPlaylist, "%[^\n]%*c", temp) == 1) {
+        for (i = 0; i < strlen(temp); i++) {
+            if (temp[i] == ' ' && temp[i+1] == '-' && temp[i + 2] == ' ') {
+                for (j = i+3; j < strlen(temp); j++) {
+                    nomeMusica[k++] = temp[j];
+                }
+                break;
+            }
+            nomeArt[i] = temp[i];
+        }
+        nomeArt[i] = '\0';
+        nomeMusica[k] = '\0';
         
         Celula *c = malloc(sizeof(Celula));
         c->musica = CriaMusica(nomeArt, nomeMusica);
@@ -72,6 +84,10 @@ void InsereMusicasPlaylist(Playlist *play){
             play->ultima->prox= c;
             play->ultima = c;
         }
+
+        nomeArt[0] = '\0';
+        nomeMusica[0] = '\0';
+        i = j = k = 0;
     }
 
     fclose(fPlaylist);
@@ -140,8 +156,8 @@ void InsereMusicaPlaylist(Playlist *play, Musica *musica){
         play->ultima->prox= celula;
         play->ultima = celula;
     }
-
 }
+
 // normal, artista
 void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usuario){
     if(!play) return;
@@ -222,7 +238,6 @@ void PreencheListasPlaylistUsuario(ListaPlaylist *lista){
     }
 }
 
-
 void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
     if(!nome || !playlists) return;
 
@@ -298,4 +313,16 @@ int RetornaRelacaoMusicaAmigos(ListaPlaylist *artistasP1, ListaPlaylist *artista
     }
 
     return qtdMusicasIguaisTotais;
+}
+
+void LiberaListaPlaylist(ListaPlaylist *playlist) {
+    if (!playlist) return;
+
+    CelulaPlay* celula = playlist->ini;
+    while (celula) {
+        celula = celula->proxima;
+        LiberaPlaylist(playlist->ini->p);
+        free(playlist->ini);
+        playlist->ini = celula;
+    }
 }

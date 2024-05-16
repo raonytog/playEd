@@ -13,8 +13,8 @@ int main () {
     /**
      * Le os usuarios do sistema e relaciona suas amizades, respectivamente
     */
-    FILE *arquivoInicial = LeUsuariosDoArquivo(lista); 
-    LeArquivoAmizade(arquivoInicial, amizades, lista); 
+    FILE *arquivoInicial = LeUsuariosDoArquivo(lista);
+    LeArquivoAmizade(arquivoInicial, amizades, lista);
 
     /**
      * Le e insre as playlists de casa usuario do sistema
@@ -39,7 +39,7 @@ int main () {
     PlaylistRefatorada(lista);
     Similaridades(amizades);
 
-
+    LiberaListaAmizade(amizades);
     LiberaListaUsuario(lista);
     return 0;
 }

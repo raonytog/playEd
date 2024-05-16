@@ -46,7 +46,13 @@ void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist) {
 
 void LiberaUsuario(Usuario *usuario) {
     if (!usuario) return;
+
+    LiberaListaPlaylist(usuario->playlistsArtistas);
+    free(usuario->playlistsArtistas);
+
+    LiberaListaPlaylist(usuario->playlists);
     free(usuario->playlists);
+
     free(usuario->nome);
     free(usuario);
 }

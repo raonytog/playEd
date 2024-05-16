@@ -45,6 +45,7 @@ FILE *LeUsuariosDoArquivo(ListaUsuario *lista) {
         if(flag =='\n') break;
     }
 
+    
     return fAmizades;
 }
 
@@ -200,9 +201,9 @@ void LiberaListaUsuario(ListaUsuario *lista) {
     while (auxiliar) {
         auxiliar = lista->prim->proximo;
         LiberaUsuario(lista->prim->usuario);
-        free(lista->prim); lista->prim = NULL;
+        free(lista->prim);
         lista->prim = auxiliar;
     }
 
-    free(lista); lista = NULL;
+    free(lista);
 }

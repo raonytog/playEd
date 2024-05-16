@@ -20,8 +20,8 @@ int main () {
      * Le e insre as playlists de casa usuario do sistema
      * Em seguida, preenche cada playlist com suas respectivas musicas
     */
-    // LePlaylistsUsuarios(lista);
-    // PreenchePlaylistUsuarios(lista);
+    LePlaylistsUsuarios(lista);
+    PreenchePlaylistUsuarios(lista);
 
     /**
      * Analisa cada playlist do usuario e preenche uma lista de playlists com

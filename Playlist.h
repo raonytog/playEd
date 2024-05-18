@@ -46,6 +46,8 @@ void LiberaPlaylist(Playlist *playlist);
 
 void LiberaListaPlaylist(ListaPlaylist *playlist);
 
+void LiberaListaPlaylistArtistas(ListaPlaylist *playlist);
+
 /* Funcoes de impressao */
 
 void ImprimePlaylistArquivo(Playlist *playlist);

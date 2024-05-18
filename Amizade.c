@@ -81,7 +81,7 @@ void Similaridades(ListaAmizade *lista) {
     if (!lista) return;
 
     FILE *fSimilaridades = NULL;
-    fSimilaridades = fopen("Saidas/similaridades.txt", "w");
+    fSimilaridades = fopen("Saida/similaridades.txt", "w");
     if (!fSimilaridades) {
         printf("Arquivo de similaridades nao foi aberto corretamente!");
         return;

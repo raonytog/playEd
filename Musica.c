@@ -6,7 +6,7 @@ struct Musica{
 };
 
 Musica *CriaMusica(char *nomeArt, char *nomeMusica){
-    Musica *m = calloc(1, sizeof(Musica));
+    Musica *m = malloc(sizeof(Musica));
     if(!m){
         printf("Não foi possível cadastrar música");
         return NULL;

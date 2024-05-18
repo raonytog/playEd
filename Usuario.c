@@ -49,10 +49,7 @@ void LiberaUsuario(Usuario *usuario) {
 
     LiberaListaPlaylist(usuario->playlistsArtistas);
     free(usuario->playlistsArtistas);
-
-    LiberaListaPlaylist(usuario->playlists);
-    free(usuario->playlists);
-
+    //free(usuario->playlists);
     free(usuario->nome);
     free(usuario);
 }

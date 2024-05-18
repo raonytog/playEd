@@ -172,7 +172,7 @@ void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
     if(!lista) return;
 
     Celula *aux = lista->prim;
-    int arq = mkdir("Saidas", 0777);
+    int arq = mkdir("Saida", 0777);
     if(arq==-1) printf("Erro ao criar diretorios");
     while(aux){
         Usuario *usuario = aux->usuario;

@@ -95,7 +95,7 @@ void InsereMusicasPlaylist(Playlist *play){
 
 void LiberaPlaylist(Playlist *playlist){
     if(!playlist) return;
-    Celula *auxiliar = playlist->prim->prox;
+    Celula *auxiliar = playlist->prim;
     
     while(auxiliar) {
        auxiliar = playlist->prim->prox;
@@ -136,10 +136,15 @@ void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *f
     if(!inicial) return;
     
     CelulaPlay *celula = inicial->ini;
+    CelulaPlay *aux = NULL;
     while(celula){
         AnalisaPlaylistsArtistas(celula->p, final, usuario);
+        aux = celula;
         celula = celula->proxima;
-    }
+       
+    } 
+    LiberaListaPlaylistArtistas(inicial);
+    free(inicial);
 }
 
 void InsereMusicaPlaylist(Playlist *play, Musica *musica){
@@ -178,7 +183,6 @@ void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usu
             InsereMusicaPlaylist(play, m);
             IncrementaNumeroArtistasUsuario(usuario);
             flag++;
-
         // caso n esteja vazia, procura a pessoa
         } else {
             CelulaPlay *cp = lista->ini;
@@ -187,23 +191,29 @@ void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usu
                 if(strcmp(RetornaArtista(m), play->nome)==0) { 
                     Celula *musica = play->prim;
                     while (musica) {
-                        if (strcmp(RetornaMusica(m), RetornaMusica(musica->musica)) == 0) musicaRepetida = 1;
+                        if (strcmp(RetornaMusica(m), RetornaMusica(musica->musica)) == 0){
+                            musicaRepetida = 1;
+                            break;
+                        }
                         musica = musica->prox;
-                        break;
+                      
                     }
                     if (!musicaRepetida) InsereMusicaPlaylist(play, m);
                     flag++;
+            
                 }
               
                 cp = cp->proxima;
+                
             }
-        
+            if(musicaRepetida) LiberaMusica(m);
             // caso nao ache a pessoa
             if(!flag) {
                 Playlist *play = InserePlaylistLista(lista,RetornaArtista(m));
                 InsereMusicaPlaylist(play, m);
-                IncrementaNumeroArtistasUsuario(usuario);
-            } 
+                IncrementaNumeroArtistasUsuario(usuario); 
+            }
+            
         }
     }
 }
@@ -325,4 +335,24 @@ void LiberaListaPlaylist(ListaPlaylist *playlist) {
         free(playlist->ini);
         playlist->ini = celula;
     }
+}
+
+void LiberaListaPlaylistArtistas(ListaPlaylist *playlist) {
+    if (!playlist) return;
+
+    CelulaPlay* celula = playlist->ini;
+    while (celula) {
+        free(celula->p->nome);
+        Celula *aux = celula->p->prim;
+        while(aux){
+            Celula *aux2 = aux;
+            aux = aux->prox;
+            free(aux2);
+        }
+        celula = celula->proxima;
+        free(playlist->ini->p);
+        free(playlist->ini);
+        playlist->ini = celula;
+    }
+    
 }

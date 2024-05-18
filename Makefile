@@ -1,8 +1,11 @@
-# disclaimers: precisa mudar o argv se o nome da pasta mudar
-
 # compila e executa o programa
 run:
 	make compile
+	./prog
+
+# apenas executa o arquivo prog.exe
+exe:
+	clear.
 	./prog
 
 # limpa o terminal e compila

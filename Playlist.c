@@ -256,7 +256,7 @@ void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
     sprintf(caminho1, "Saida/%s", nome);
 
     int arq = mkdir(caminho1, 0777);
-    if(arq==-1) printf("Erro ao criar diretorios");
+    if(arq==-1) printf("Erro ao criar diretorios\n");
 
     while(aux) {
         sprintf(caminho, "%s/%s.txt", caminho1, aux->p->nome);
@@ -274,23 +274,16 @@ void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
     }
 }
 
-void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas) {
-    FILE *fFatorada = NULL;
-    fFatorada = fopen("Saida/played-fatorada.txt", "a+");
-    if (!fFatorada) {
-        printf("Arquivo de saida da playlist-fatorada nao aberto");
-        return;
-    }
+void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas, FILE *file) {
+    if (!nome || !playlistArtistas || !file) return;
 
-    fprintf(fFatorada, "%s;%d", nome, qtdArtistas);
+    fprintf(file, "%s;%d", nome, qtdArtistas);
     CelulaPlay *celula = playlistArtistas->ini;
     while (celula) {
-        fprintf(fFatorada, ";%s.txt", RetornaNomePlaylist(celula->p));
+        fprintf(file, ";%s.txt", RetornaNomePlaylist(celula->p));
         celula = celula->proxima;
     }
-    fprintf(fFatorada, "\n");
-
-    fclose(fFatorada);
+    fprintf(file, "\n");
 }
 
 char *RetornaNomePlaylist(Playlist *playlist) {

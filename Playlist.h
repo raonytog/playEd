@@ -55,6 +55,6 @@ void ImprimePlaylistArquivo(Playlist *playlist);
 
 void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists);
 
-void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas);
+void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas, FILE *file);
 
 #endif

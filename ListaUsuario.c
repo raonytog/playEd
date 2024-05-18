@@ -173,7 +173,8 @@ void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
 
     Celula *aux = lista->prim;
     int arq = mkdir("Saida", 0777);
-    if(arq==-1) printf("Erro ao criar diretorios");
+    if(arq==-1) printf("Erro ao criar diretorios\n");
+
     while(aux){
         Usuario *usuario = aux->usuario;
         ImprimeEmArquivoPlaylistsUsuario(RetornaNomeUsuario(usuario),
@@ -185,13 +186,23 @@ void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
 void PlaylistRefatorada(ListaUsuario *lista) {
     if (!lista) return;
 
+    FILE *fFatorada = NULL;
+    fFatorada = fopen("Saida/played-fatorada.txt", "w");
+    if (!fFatorada) {
+        printf("Arquivo de saida da playlist-fatorada nao aberto");
+        return;
+    }
+
     Celula *celula = lista->prim;
     while (celula) {
         ImprimePlaylistRefatorada( RetornaNomeUsuario(celula->usuario), 
                                    RetornaNumArtistas(celula->usuario),
-                                   RetornaListaArtistaUsuario(celula->usuario));
+                                   RetornaListaArtistaUsuario(celula->usuario),
+                                   fFatorada);
         celula = celula->proximo;
     }
+
+    fclose(fFatorada);
 }
 
 void LiberaListaUsuario(ListaUsuario *lista) {

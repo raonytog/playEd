@@ -1,3 +1,0 @@
-Raony;2;highkey.txt;mitski.txt
-Malu;1;praia.txt
-Gabriel;1;pop.txt

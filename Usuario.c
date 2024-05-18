@@ -35,8 +35,7 @@ void InserePlaylistUsuario(Usuario *usuario, char *nome, int tipo) {
     if(tipo == 1){
         Playlist *p = InserePlaylistLista(usuario->playlists, nome);
     } 
-    //if(tipo == 2) InserePlaylistLista(usuario->playlistsArtistas, nome);
-  
+
 }
 
 void InsereNumPlaylistUsuario(Usuario *usuario,int numPlaylist) {

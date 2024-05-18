@@ -6,6 +6,8 @@
 
 typedef struct ListaUsuario ListaUsuario;
 
+/* Funcoes principais do cliente */
+
 ListaUsuario *IniciaListaUsuario();
 
 FILE *LeUsuariosDoArquivo(ListaUsuario *lista);
@@ -24,9 +26,14 @@ Usuario *AchaUsuarioNome(ListaUsuario *lista, char *nome);
 
 void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista);
 
+void PlaylistRefatorada(ListaUsuario *lista);
+
+/* Funcoes de impressao */
+
 void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista);
 
-void PlaylistRefatorada(ListaUsuario *lista);
+
+/* Funcoes de liberar memoria */
 
 void LiberaListaUsuario(ListaUsuario *lista);
 

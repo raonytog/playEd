@@ -42,6 +42,7 @@ void AnalisaPlaylistsArtistas(Playlist *play, ListaPlaylist *lista, Usuario *usu
 
 void AnalisaPlaylistsArtistasIndividual(ListaPlaylist *inicial, ListaPlaylist *final, Usuario *usuario);
 
+/* Funcoes de liberar memoria */
 void LiberaPlaylist(Playlist *playlist);
 
 void LiberaListaPlaylist(ListaPlaylist *playlist);

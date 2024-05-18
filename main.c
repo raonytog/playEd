@@ -39,6 +39,7 @@ int main () {
     PlaylistRefatorada(lista);
     Similaridades(amizades);
 
+    /** Libera as listas de amizade e de usuario */
     LiberaListaAmizade(amizades);
     LiberaListaUsuario(lista);
     return 0;

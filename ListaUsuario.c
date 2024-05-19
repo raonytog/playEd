@@ -1,11 +1,12 @@
 #include "ListaUsuario.h"
 #include <sys/stat.h> 
 #include <sys/types.h> 
+#include <dirent.h>
 #include"Amizade.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <unistd.h>
 typedef struct Celula Celula;
 
 struct Celula {
@@ -170,17 +171,20 @@ void SeparaPlaylistArtistasPorUsuario(ListaUsuario *lista){
 
 void ImprimeEmArquivoPlaylistsGlobal(ListaUsuario *lista){
     if(!lista) return;
-
+    DIR *dp;
     Celula *aux = lista->prim;
-    int arq = mkdir("Saida", 0777);
-    if(arq==-1) printf("Erro ao criar diretorios\n");
-
+    if((dp = opendir("Saida")) == NULL){
+         int arq = mkdir("Saida", 0777);
+         if(arq==-1) printf("Erro ao criar diretorios\n");
+    }
+   
     while(aux){
         Usuario *usuario = aux->usuario;
         ImprimeEmArquivoPlaylistsUsuario(RetornaNomeUsuario(usuario),
         RetornaListaArtistaUsuario(usuario));
         aux = aux->proximo;
     }
+    closedir(dp);
 }
 
 void PlaylistRefatorada(ListaUsuario *lista) {

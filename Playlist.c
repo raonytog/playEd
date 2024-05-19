@@ -4,6 +4,7 @@
 #include "Playlist.h"
 #include <sys/stat.h> 
 #include <sys/types.h> 
+#include <dirent.h>
 typedef struct Celula Celula;
 typedef struct CelulaPlay CelulaPlay;
 
@@ -253,11 +254,15 @@ void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
 
     CelulaPlay *aux = playlists->ini;
     char caminho1[150], caminho[200];
+    DIR *dp;
     sprintf(caminho1, "Saida/%s", nome);
+    if((dp = opendir(caminho1)) == NULL){
+        
+        int arq = mkdir(caminho1, 0777);
+        if(arq==-1) printf("Erro ao criar diretorios\n");
 
-    int arq = mkdir(caminho1, 0777);
-    if(arq==-1) printf("Erro ao criar diretorios\n");
-
+    }
+   
     while(aux) {
         sprintf(caminho, "%s/%s.txt", caminho1, aux->p->nome);
         FILE *arquivoPlaylist = fopen(caminho, "w");
@@ -272,6 +277,7 @@ void ImprimeEmArquivoPlaylistsUsuario(char *nome, ListaPlaylist *playlists) {
         fclose(arquivoPlaylist);
         aux = aux->proxima;
     }
+    closedir(dp);
 }
 
 void ImprimePlaylistRefatorada(char *nome, int qtdArtistas, ListaPlaylist *playlistArtistas, FILE *file) {
